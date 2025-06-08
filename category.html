@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }} - Buns Across Borders</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Buns Across Borders</div>
+            <div class="date">{{ now.strftime('%A, %B %d, %Y') }}</div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('category', category_name='history') }}">Historical Fast Food</a></li>
+                <li><a href="{{ url_for('category', category_name='today') }}">Fast Food Today</a></li>
+                <li><a href="{{ url_for('category', category_name='enduring-issue') }}">Enduring Issue</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="category-title">{{ category }} News</h1>
+        
+        <div class="article-grid">
+            {% for article in articles %}
+            <div class="article-card">
+                <img src="/static/images/{{ article.image }}" alt="{{ article.title }}">
+                <div class="article-info">
+                    <h3><a href="/article/{{ article.id }}">{{ article.title }}</a></h3>
+                    <p class="article-meta">{{ article.date|format_date }} | By {{ article.author }}</p>
+                    <p>{{ article.content[:150] }}...</p>
+                    <a href="/article/{{ article.id }}" class="read-more">Read More</a>
+                </div>
+            </div>
+            {% else %}
+            <div class="no-articles">
+                <p>No articles found in this category.</p>
+                <a href="/">Return to Home</a>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Mia, William, and Deon's AP World project for Mr. Li.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: hli14@schools.nyc.gov</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>McDonald's</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; {{ now.year }} Mia Basith, William Chen, and Deon Woon
+        </div>
+    </footer>
+</body>
+</html>
